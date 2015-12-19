@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">PMVS_Lab03</string>
+    <string name="wait">Please wait</string>
+    <string name="title_activity_main">DishDigger</string>
+    <string name="search_title">Search dish</string>
+    <string name="search_hint">Dish name</string>
+    <string name="search">Search</string>
+    <string name="dish_desc">Dish image</string>
+    <string name="dish_name">Dish Name</string>
+    <string name="publisher">Publisher:</string>
+    <string name="ingredients">Ingredients:</string>
+    <string name="rating">Rating:</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla a libero quis risus porta tristique non sit amet nisi. Aenean lacinia arcu enim, in mollis enim accumsan eget. Vivamus vitae varius erat. Donec quis purus dignissim, tempus mi et, porta justo. Donec ex nulla, laoreet a lectus sit amet, aliquet rhoncus tellus. Fusce pretium ex vitae nulla scelerisque, non aliquet diam sodales. Donec ultricies gravida cursus. Nunc porttitor ex sit amet interdum dignissim. Mauris sed arcu vitae ex dictum cursus quis tincidunt lacus. Cras eu lobortis velit, quis mattis mi. Sed nisi odio, lobortis non vehicula a, sodales ut felis. Aliquam eros justo, feugiat sit amet nisl non, efficitur euismod orci. Donec vulputate erat non nibh elementum, accumsan eleifend arcu ultrices.
+Duis gravida volutpat pellentesque. Nullam sit amet venenatis nunc. Sed imperdiet turpis ut erat porttitor, sit amet consectetur purus maximus. Aliquam vulputate nisi vel tortor fermentum vehicula. Vivamus tempus risus odio, in imperdiet nisl tempor eget. Etiam placerat mollis orci, et pretium metus. Nullam pellentesque diam sed nisl luctus, sit amet feugiat odio scelerisque. Mauris vestibulum leo urna. Mauris venenatis nibh ut blandit elementum.
+Cras tristique arcu id eros lacinia justo.
+</string>
+    <string name="search_icon">search_icon</string>
+    <string name="tv_tap_search">Tap Search to Start</string>
+</resources>
