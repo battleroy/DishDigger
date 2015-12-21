@@ -13,6 +13,7 @@ import android.speech.RecognizerIntent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -261,8 +262,8 @@ public class MainActivity extends AppCompatActivity implements SearchBox.SearchL
             for (int i = 0; i < recipesArray.length(); ++i) {
                 JSONObject jsonRecipe = (JSONObject) recipesArray.get(i);
                 Recipe recipe = new Recipe(
-                        jsonRecipe.getString("recipe_id"),
-                        jsonRecipe.getString("title"),
+                        Html.fromHtml(jsonRecipe.getString("recipe_id")).toString(),
+                        Html.fromHtml(jsonRecipe.getString("title")).toString(),
                         Uri.parse(jsonRecipe.getString("image_url"))
                 );
                 result.add(recipe);

@@ -8,6 +8,7 @@ import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -139,22 +140,22 @@ public class DishActivity extends AppCompatActivity {
         private void fillRecipeDataFromJSON(String jsonData) throws JSONException, IOException {
             final JSONObject jsonRecipe = new JSONObject(jsonData).getJSONObject("recipe");
             final URL url = new URL(jsonRecipe.getString("image_url"));
-            final Bitmap bitmap = BitmapFactory.decodeStream((InputStream) url.getContent());
+            Bitmap bitmap = BitmapFactory.decodeStream((InputStream) url.getContent());
+            bitmap = BitmapFiltering.fastBlur(bitmap, 1f, 5);
+            bitmap = BitmapFiltering.brightness(bitmap, 60);
+            int dstSize = Math.max(svDish.getWidth(), svDish.getHeight());
+            bitmap = ThumbnailUtils.extractThumbnail(bitmap, dstSize, dstSize);
+            final Bitmap blurred = BitmapFiltering.scaleCenterCrop(bitmap, svDish.getWidth(), svDish.getHeight());
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         // ivDishImage.setImageBitmap(bitmap);
-                        tvPublisherName.setText(jsonRecipe.getString("publisher"));
-                        tvDishName.setText(jsonRecipe.getString("title"));
+                        tvPublisherName.setText(Html.fromHtml(jsonRecipe.getString("publisher")));
+                        tvDishName.setText(Html.fromHtml(jsonRecipe.getString("title")));
                         tvIngredientsBody.setText(getIngredientsFromJSONArray(jsonRecipe.getJSONArray("ingredients")));
                         Double rank = jsonRecipe.getDouble("social_rank");
                         rbDish.setRating((float) (rank / 100 * rbDish.getMax()));
-                        Bitmap blurred = BitmapFiltering.fastBlur(bitmap, 1f, 5);
-                        blurred = BitmapFiltering.brightness(blurred, 60);
-                        int dstSize = Math.max(svDish.getWidth(), svDish.getHeight());
-                        blurred = ThumbnailUtils.extractThumbnail(blurred, dstSize, dstSize);
-                        blurred = BitmapFiltering.scaleCenterCrop(blurred, svDish.getWidth(), svDish.getHeight());
                         svDish.setBackground(new BitmapDrawable(getResources(), blurred));
                         /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                             Palette palette = Palette.generate(bitmap);
@@ -172,7 +173,7 @@ public class DishActivity extends AppCompatActivity {
         private String getIngredientsFromJSONArray(JSONArray ingredients) throws JSONException {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < ingredients.length(); ++i) {
-                sb.append(i + 1).append(". ").append(ingredients.get(i).toString()).append("\n");
+                sb.append(i + 1).append(". ").append(Html.fromHtml(ingredients.get(i).toString())).append("\n");
             }
             return sb.toString();
         }
