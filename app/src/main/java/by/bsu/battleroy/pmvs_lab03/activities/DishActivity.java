@@ -3,26 +3,26 @@ package by.bsu.battleroy.pmvs_lab03.activities;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.graphics.Palette;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +42,7 @@ public class DishActivity extends AppCompatActivity {
 
     private ScrollView svDish;
     private TextView tvDishName;
-    private ImageView ivDishImage;
+    // private ImageView ivDishImage;
     private TextView tvPublisherName;
     private TextView tvIngredientsBody;
     private RatingBar rbDish;
@@ -96,7 +96,13 @@ public class DishActivity extends AppCompatActivity {
         protected Void doInBackground(String... params) {
             BufferedReader br = null;
             try {
-                HttpClient client = new DefaultHttpClient();
+                HttpParams httpParameters = new BasicHttpParams();
+                int timeoutConnection = 30000;
+                HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+                int timeoutSocket = 6000;
+                HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+                HttpClient client = new DefaultHttpClient(httpParameters);
+
                 URI website = new URI("http://food2fork.com/api/get?key=5fd809d60860de26c90d0a949ac3b781&rId=" + params[0]);
                 HttpGet request = new HttpGet(website);
                 HttpResponse response = client.execute(request);
@@ -108,6 +114,12 @@ public class DishActivity extends AppCompatActivity {
             } catch (ClientProtocolException ex) {
                 ex.printStackTrace();
             } catch (IOException ex) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(DishActivity.this, "Check your internet", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 ex.printStackTrace();
             } catch (JSONException ex) {
                 ex.printStackTrace();

@@ -6,11 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.content.ContextCompat;
@@ -25,6 +22,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.quinny898.library.persistentsearch.SearchResult;
@@ -33,6 +31,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +51,6 @@ import java.util.List;
 
 import by.bsu.battleroy.pmvs_lab03.R;
 import by.bsu.battleroy.pmvs_lab03.model.Recipe;
-import by.bsu.battleroy.pmvs_lab03.util.BitmapFiltering;
 import by.bsu.battleroy.pmvs_lab03.view.RecipeView;
 
 
@@ -187,7 +187,13 @@ public class MainActivity extends AppCompatActivity implements SearchBox.SearchL
         protected Void doInBackground(String... params) {
             BufferedReader br = null;
             try {
-                HttpClient client = new DefaultHttpClient();
+                HttpParams httpParameters = new BasicHttpParams();
+                int timeoutConnection = 30000;
+                HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+                int timeoutSocket = 6000;
+                HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+                HttpClient client = new DefaultHttpClient(httpParameters);
+
                 URI website = new URI("http://food2fork.com/api/search?key=5fd809d60860de26c90d0a949ac3b781&q=" + params[0]);
                 request = new HttpGet(website);
                 HttpResponse response = client.execute(request);
@@ -196,14 +202,17 @@ public class MainActivity extends AppCompatActivity implements SearchBox.SearchL
                 recipes = getRecipesFromJSON(jsonData);
                 recipeImages = getImagesForRecipes(recipes);
             } catch (Exception ex) {
+                recipes.clear();
+                recipeImages.clear();
+                Log.e(ex.getClass().toString(), ex.getMessage());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Toast.makeText(MainActivity.this, "Check your internet", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                         gvRecipes.invalidateViews();
                     }
                 });
-                Log.e(ex.getClass().toString(), ex.getMessage());
             }
             return null;
         }
@@ -301,12 +310,14 @@ public class MainActivity extends AppCompatActivity implements SearchBox.SearchL
             recipeView.setOnClickListener(MainActivity.this);
             recipeView.setLayoutParams(new GridView.LayoutParams(gvRecipes.getColumnWidth(), gvRecipes.getColumnWidth()));
             recipeView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            Bitmap bitmap = recipeImages.get(position);
-            if (bitmap != null) {
-                recipeView.setImageBitmap(bitmap);
-                return recipeView;
+            if (position < recipeImages.size()) {
+                Bitmap bitmap = recipeImages.get(position);
+                if (bitmap != null) {
+                    recipeView.setImageBitmap(bitmap);
+                    return recipeView;
+                }
             }
-            return null;
+            return convertView;
         }
     }
 }
