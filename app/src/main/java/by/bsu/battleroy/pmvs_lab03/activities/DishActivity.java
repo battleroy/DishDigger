@@ -3,11 +3,15 @@ package by.bsu.battleroy.pmvs_lab03.activities;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -59,7 +63,7 @@ public class DishActivity extends AppCompatActivity {
 
         svDish = (ScrollView) findViewById(R.id.sv_dish);
         tvDishName = (TextView) findViewById(R.id.tv_dish_name);
-        ivDishImage = (ImageView) findViewById(R.id.iv_dish);
+        // ivDishImage = (ImageView) findViewById(R.id.iv_dish);
         tvPublisherName = (TextView) findViewById(R.id.tv_publisher_name);
         tvIngredientsBody = (TextView) findViewById(R.id.tv_ingredients_body);
         rbDish = (RatingBar) findViewById(R.id.rb_dish);
@@ -128,7 +132,7 @@ public class DishActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     try {
-                        ivDishImage.setImageBitmap(bitmap);
+                        // ivDishImage.setImageBitmap(bitmap);
                         tvPublisherName.setText(jsonRecipe.getString("publisher"));
                         tvDishName.setText(jsonRecipe.getString("title"));
                         tvIngredientsBody.setText(getIngredientsFromJSONArray(jsonRecipe.getJSONArray("ingredients")));
@@ -140,6 +144,12 @@ public class DishActivity extends AppCompatActivity {
                         blurred = ThumbnailUtils.extractThumbnail(blurred, dstSize, dstSize);
                         blurred = BitmapFiltering.scaleCenterCrop(blurred, svDish.getWidth(), svDish.getHeight());
                         svDish.setBackground(new BitmapDrawable(getResources(), blurred));
+                        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                            Palette palette = Palette.generate(bitmap);
+                            int primaryDark = getResources().getColor(R.color.colorPrimaryDark, getTheme());
+                            int vibrantColor = palette.getLightMutedColor(primaryDark);
+                            getWindow().setStatusBarColor(vibrantColor);
+                        }*/
                     } catch (JSONException ex) {
                         ex.printStackTrace();
                     }

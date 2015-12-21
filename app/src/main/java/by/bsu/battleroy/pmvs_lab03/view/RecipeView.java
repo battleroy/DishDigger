@@ -17,7 +17,7 @@ public class RecipeView extends ImageView {
     private String recipeId;
     private Paint footerBgPaint;
     private TextPaint footerTextPaint;
-    private Rect footerRect = new Rect();
+    private Rect footerRect;
 
     private Context context;
 
@@ -38,6 +38,8 @@ public class RecipeView extends ImageView {
         footerTextPaint.setAlpha(255);
         footerTextPaint.setTextSize(20);
         footerTextPaint.setTextAlign(Paint.Align.LEFT);
+
+        footerRect = new Rect();
     }
 
     @Override

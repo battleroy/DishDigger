@@ -21,12 +21,13 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="@string/dish_name"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+            android:textAppearance="@style/contentTextStyle"
             android:textColor="@color/colorPrimaryText"
             android:textStyle="bold"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="24sp" />
 
-        <ImageView
+  <!--      <ImageView
             android:id="@+id/iv_dish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,18 +36,20 @@
             android:src="@drawable/eda"
             android:layout_below="@+id/tv_dish_name"
             android:layout_centerHorizontal="true"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter" />   -->
 
+        <!--android:layout_below="@+id/iv_dish" -->
         <TextView
             android:id="@+id/tv_publisher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/iv_dish"
+            android:layout_below="@+id/tv_dish_name"
             android:text="@string/publisher"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorPrimaryText"
-            android:textStyle="bold" />
+            android:textAppearance="@style/contentTextStyle"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimaryText" />
 
         <TextView
             android:id="@+id/tv_ingredients"
@@ -55,9 +58,10 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tv_publisher_name"
             android:text="@string/ingredients"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorPrimaryText"
-            android:textStyle="bold" />
+            android:textAppearance="@style/contentTextStyle"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimaryText" />
 
         <TextView
             android:id="@+id/tv_ingredients_body"
@@ -66,8 +70,9 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tv_ingredients"
             android:text="@string/lorem"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorPrimaryText" />
+            android:textAppearance="@style/contentTextStyle"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_rating"
@@ -76,11 +81,12 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tv_ingredients_body"
             android:text="@string/rating"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorPrimaryText"
+            android:textAppearance="@style/contentTextStyle"
             android:textStyle="bold"
             android:singleLine="false"
-            android:password="false" />
+            android:password="false"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimaryText" />
 
         <TextView
             android:id="@+id/tv_publisher_name"
@@ -89,8 +95,9 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tv_publisher"
             android:text="New Text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorPrimaryText" />
+            android:textAppearance="@style/contentTextStyle"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="18sp" />
 
         <RatingBar
             android:id="@+id/rb_dish"

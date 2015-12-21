@@ -6,8 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.content.ContextCompat;
@@ -47,6 +50,7 @@ import java.util.List;
 
 import by.bsu.battleroy.pmvs_lab03.R;
 import by.bsu.battleroy.pmvs_lab03.model.Recipe;
+import by.bsu.battleroy.pmvs_lab03.util.BitmapFiltering;
 import by.bsu.battleroy.pmvs_lab03.view.RecipeView;
 
 
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements SearchBox.SearchL
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage(getString(R.string.wait));
         progressDialog.setOnCancelListener(this);
+        progressDialog.setCancelable(false);
 
         ivSearch = (ImageView) findViewById(R.id.iv_search_icon);
         tvTapSearch = (TextView) findViewById(R.id.tv_tap_search);
