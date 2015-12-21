@@ -67,6 +67,14 @@ public class RecipeView extends ImageView {
         canvas.restore();
     }
 
+    public String getRecipeName() {
+        return recipeName;
+    }
+
+    public void setRecipeName(String recipeName) {
+        this.recipeName = recipeName;
+    }
+
     public String getRecipeId() {
         return recipeId;
     }
